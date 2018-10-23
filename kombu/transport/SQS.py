@@ -321,9 +321,9 @@ class Channel(virtual.Channel):
         """Put message onto queue."""
         print('RajJain: In SQS _put')
         q = self._new_queue(queue)
-        print('RajJain: ', q)
         m = Message()
         m.set_body(dumps(message))
+        print('RajJain: message being sent {}'.format(message))
         q.write(m)
 
     def _put_fanout(self, exchange, message, routing_key, **kwargs):
