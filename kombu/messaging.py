@@ -175,7 +175,6 @@ class Producer(object):
                  headers, properties, routing_key, mandatory,
                  immediate, exchange, declare):
         channel = self.channel
-        print('RajJain: ', channel)
         message = channel.prepare_message(
             body, priority, content_type,
             content_encoding, headers, properties,
@@ -183,7 +182,6 @@ class Producer(object):
         if declare:
             maybe_declare = self.maybe_declare
             [maybe_declare(entity) for entity in declare]
-        print('RajJain: channel basic_publish about to be called')
         return channel.basic_publish(
             message,
             exchange=exchange, routing_key=routing_key,

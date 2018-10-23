@@ -319,11 +319,9 @@ class Channel(virtual.Channel):
 
     def _put(self, queue, message, **kwargs):
         """Put message onto queue."""
-        print('RajJain: In SQS _put')
         q = self._new_queue(queue)
         m = Message()
         m.set_body(dumps(message))
-        print('RajJain: message being sent {}'.format(message))
         q.write(m)
 
     def _put_fanout(self, exchange, message, routing_key, **kwargs):
@@ -396,8 +394,11 @@ class Channel(virtual.Channel):
         # a token, so we know that we are allowed to consume at least
         # one message.
         maxcount = self.qos.can_consume_max_estimate()
+        print('RajJain: maxcount from qos is {}'.format(maxcount))
         maxcount = max_if_unlimited if maxcount is None else max(maxcount, 1)
+        print('RajJain: maxcount after logic is {}'.format(maxcount))
         if maxcount:
+            print('RajJain: in if count asked for is {}'.format(min(maxcount, SQS_MAX_MESSAGES)))
             messages = self._get_from_sqs(
                 queue, count=min(maxcount, SQS_MAX_MESSAGES),
             )
