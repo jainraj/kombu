@@ -319,7 +319,9 @@ class Channel(virtual.Channel):
 
     def _put(self, queue, message, **kwargs):
         """Put message onto queue."""
+        print('RajJain: In SQS _put')
         q = self._new_queue(queue)
+        print('RajJain: ', q)
         m = Message()
         m.set_body(dumps(message))
         q.write(m)
