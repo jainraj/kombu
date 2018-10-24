@@ -143,7 +143,7 @@ class QoS(object):
         """
         pcount = self.prefetch_count
         if pcount:
-            print('RajJain: Delivered: {}, Dirty: {}'.format(len(self._delivered), len(self._dirty)))
+            print('RajJain: Pcount: {}, Delivered: {}, Dirty: {}'.format(pcount, len(self._delivered), len(self._dirty)))
             return max(pcount - (len(self._delivered) - len(self._dirty)), 0)
 
     def append(self, message, delivery_tag):
