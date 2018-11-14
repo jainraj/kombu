@@ -102,6 +102,7 @@ class Channel(virtual.Channel):
         self._update_queue_cache(self.queue_name_prefix)
 
         self.hub = kwargs.get('hub') or get_event_loop()
+        self.qos.restore_at_shutdown = False
 
     def _update_queue_cache(self, queue_name_prefix):
         resp = self.sqs.list_queues(QueueNamePrefix=queue_name_prefix)
@@ -281,7 +282,6 @@ class Channel(virtual.Channel):
 
         # Note: ignoring max_messages for SQS with boto3
         max_count = self._get_message_estimate()
-        print('RajJain: wait_time_seconds is {}'.format(self.wait_time_seconds))
         if max_count:
             q_url = self._new_queue(queue)
             resp = self.sqs.receive_message(
